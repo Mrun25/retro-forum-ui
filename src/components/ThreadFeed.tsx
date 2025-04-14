@@ -92,7 +92,6 @@ const ThreadFeed = () => {
     
     switch(sortOption) {
       case "Latest":
-        // Using timeAgo as a proxy for recency (in a real app would use timestamps)
         sortedThreads.sort((a, b) => a.timeAgo.localeCompare(b.timeAgo));
         break;
       case "Most Liked":
@@ -101,10 +100,8 @@ const ThreadFeed = () => {
       case "Most Commented":
         sortedThreads.sort((a, b) => b.replyCount - a.replyCount);
         break;
-      // Other sort options would have similar logic
     }
     
-    // Apply category filter if one is selected
     if (selectedCategory) {
       sortedThreads = sortedThreads.filter(thread => thread.category === selectedCategory);
     }
@@ -115,7 +112,6 @@ const ThreadFeed = () => {
 
   const filterByCategory = (category: string) => {
     if (selectedCategory === category) {
-      // If clicking the same category, clear the filter
       setSelectedCategory(null);
       setDisplayedThreads(threadsData);
     } else {
@@ -124,11 +120,10 @@ const ThreadFeed = () => {
     }
   };
 
-  // Get unique categories for category filter
   const categories = [...new Set(threadsData.map(thread => thread.category))];
 
   return (
-    <div className="flex-1 py-6 px-4">
+    <div className="flex-1 py-6 px-4 animate-fade-in">
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-xl font-bold">Community Discussions</h2>
         
@@ -142,7 +137,7 @@ const ThreadFeed = () => {
           </button>
           
           {isDropdownOpen && (
-            <div className="absolute right-0 mt-2 w-48 bg-background border-2 border-border rounded-xl shadow-outline z-40 py-1">
+            <div className="absolute right-0 mt-2 w-48 bg-background border-2 border-[var(--outline-color)] rounded-xl shadow-outline z-40 py-1">
               {sortOptions.map((option) => (
                 <button
                   key={option.label}
@@ -158,7 +153,6 @@ const ThreadFeed = () => {
         </div>
       </div>
       
-      {/* Category filters */}
       <div className="flex gap-2 mb-6 overflow-x-auto pb-2">
         {categories.map(category => (
           <button

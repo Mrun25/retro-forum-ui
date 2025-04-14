@@ -12,7 +12,7 @@ const navItems = [
 
 const MobileNavigation = () => {
   return (
-    <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-background border-t-2 border-border py-2 px-6 z-40">
+    <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-background border-t-2 border-[var(--outline-color)] py-2 px-6 z-40">
       <ul className="flex justify-between items-center">
         {navItems.map((item) => (
           <li key={item.label}>
