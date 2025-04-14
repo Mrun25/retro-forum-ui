@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -61,6 +62,24 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
+				},
+				// Custom colors for our forum
+				retro: {
+					bg: '#FDF6EE',
+					primary: '#B9C6F0',
+					coral: '#F49CA0',
+					yellow: '#F6C57F',
+					mint: '#C2E0DC',
+					pink: '#F5D1CE',
+					text: '#3E3E3E'
+				},
+				disco: {
+					bg: '#0B0C10',
+					blue: '#00FFF7',
+					magenta: '#FF4D94',
+					violet: '#A864FF',
+					yellow: '#F9FF00',
+					teal: '#00E0B8'
 				}
 			},
 			borderRadius: {
@@ -70,25 +89,40 @@ export default {
 			},
 			keyframes: {
 				'accordion-down': {
-					from: {
-						height: '0'
-					},
-					to: {
-						height: 'var(--radix-accordion-content-height)'
-					}
+					from: { height: '0' },
+					to: { height: 'var(--radix-accordion-content-height)' }
 				},
 				'accordion-up': {
-					from: {
-						height: 'var(--radix-accordion-content-height)'
+					from: { height: 'var(--radix-accordion-content-height)' },
+					to: { height: '0' }
+				},
+				'float': {
+					'0%, 100%': { transform: 'translateY(0)' },
+					'50%': { transform: 'translateY(-5px)' }
+				},
+				'pulse-glow': {
+					'0%, 100%': { 
+						boxShadow: '0 0 10px 2px rgba(168, 100, 255, 0.2), 0 0 20px 4px rgba(0, 255, 247, 0.1)' 
 					},
-					to: {
-						height: '0'
+					'50%': { 
+						boxShadow: '0 0 15px 5px rgba(168, 100, 255, 0.4), 0 0 30px 8px rgba(0, 255, 247, 0.2)' 
 					}
+				},
+				'wobble': {
+					'0%, 100%': { transform: 'translateX(0)' },
+					'25%': { transform: 'translateX(-5px) rotate(-1deg)' },
+					'75%': { transform: 'translateX(5px) rotate(1deg)' }
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
+				'accordion-up': 'accordion-up 0.2s ease-out',
+				'float': 'float 3s ease-in-out infinite',
+				'pulse-glow': 'pulse-glow 3s ease-in-out infinite',
+				'wobble': 'wobble 0.4s ease-in-out'
+			},
+			fontFamily: {
+				'quicksand': ['Quicksand', 'sans-serif']
 			}
 		}
 	},
