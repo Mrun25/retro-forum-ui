@@ -86,19 +86,19 @@ const ThreadFeed = () => {
   return (
     <div className="flex-1 py-6 px-4">
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-xl font-bold dark:text-white">Community Discussions</h2>
+        <h2 className="text-xl font-bold">Community Discussions</h2>
         
         <div className="relative">
           <button
             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-            className="retro-box px-4 py-2 flex items-center gap-2"
+            className="outline-card px-4 py-2 flex items-center gap-2 hover-bounce-sm"
           >
             <span>Sort: {selectedSort}</span>
             <ArrowDownAZ className="h-4 w-4" />
           </button>
           
           {isDropdownOpen && (
-            <div className="absolute right-0 mt-2 w-40 bg-white dark:bg-disco-bg border-2 dark:border-disco-blue rounded-xl shadow-lg z-40 py-1 glow">
+            <div className="absolute right-0 mt-2 w-40 bg-white border-2 border-black rounded-xl shadow-outline z-40 py-1">
               {sortOptions.map((option) => (
                 <button
                   key={option.label}
@@ -106,7 +106,7 @@ const ThreadFeed = () => {
                     setSelectedSort(option.label);
                     setIsDropdownOpen(false);
                   }}
-                  className="flex items-center gap-2 w-full text-left px-4 py-2 text-sm hover:bg-retro-primary/20 dark:hover:bg-disco-blue/20"
+                  className="flex items-center gap-2 w-full text-left px-4 py-2 text-sm hover:bg-accent/20"
                 >
                   <option.icon className="h-4 w-4" />
                   {option.label}

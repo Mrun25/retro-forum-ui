@@ -63,24 +63,6 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
-				// Custom colors for our forum
-				retro: {
-					bg: '#FDF6EE',
-					primary: '#B9C6F0',
-					coral: '#F49CA0',
-					yellow: '#F6C57F',
-					mint: '#C2E0DC',
-					pink: '#F5D1CE',
-					text: '#3E3E3E'
-				},
-				disco: {
-					bg: '#0B0C10',
-					blue: '#00FFF7',
-					magenta: '#FF4D94',
-					violet: '#A864FF',
-					yellow: '#F9FF00',
-					teal: '#00E0B8'
-				}
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
@@ -100,30 +82,31 @@ export default {
 					'0%, 100%': { transform: 'translateY(0)' },
 					'50%': { transform: 'translateY(-5px)' }
 				},
-				'pulse-glow': {
-					'0%, 100%': { 
-						boxShadow: '0 0 10px 2px rgba(168, 100, 255, 0.2), 0 0 20px 4px rgba(0, 255, 247, 0.1)' 
-					},
-					'50%': { 
-						boxShadow: '0 0 15px 5px rgba(168, 100, 255, 0.4), 0 0 30px 8px rgba(0, 255, 247, 0.2)' 
-					}
-				},
 				'wobble': {
 					'0%, 100%': { transform: 'translateX(0)' },
 					'25%': { transform: 'translateX(-5px) rotate(-1deg)' },
 					'75%': { transform: 'translateX(5px) rotate(1deg)' }
+				},
+				'bounce-small': {
+					'0%, 100%': { transform: 'translateY(0)' },
+					'50%': { transform: 'translateY(-3px)' }
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
 				'accordion-up': 'accordion-up 0.2s ease-out',
 				'float': 'float 3s ease-in-out infinite',
-				'pulse-glow': 'pulse-glow 3s ease-in-out infinite',
-				'wobble': 'wobble 0.4s ease-in-out'
+				'wobble': 'wobble 0.4s ease-in-out',
+				'bounce-small': 'bounce-small 2s ease-in-out infinite'
 			},
 			fontFamily: {
-				'quicksand': ['Quicksand', 'sans-serif']
-			}
+				'quicksand': ['Quicksand', 'sans-serif'],
+				'varela': ['Varela Round', 'sans-serif']
+			},
+			scale: {
+				'102': '1.02',
+				'98': '0.98',
+			},
 		}
 	},
 	plugins: [require("tailwindcss-animate")],

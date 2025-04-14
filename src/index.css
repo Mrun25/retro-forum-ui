@@ -1,5 +1,5 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&family=Varela+Round:wght@400&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -7,83 +7,65 @@
 
 @layer base {
   :root {
-    --background: 38 75% 97%;
-    --foreground: 0 0% 24%;
+    --background: 0 0% 100%;
+    --foreground: 0 0% 12%;
 
-    --card: 38 75% 97%;
-    --card-foreground: 0 0% 24%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 12%;
 
-    --popover: 38 75% 97%;
-    --popover-foreground: 0 0% 24%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 12%;
 
-    --primary: 230 75% 83%;
-    --primary-foreground: 0 0% 24%;
+    --primary: 25 100% 65%;
+    --primary-foreground: 0 0% 12%;
 
-    --secondary: 8 85% 79%;
-    --secondary-foreground: 0 0% 24%;
+    --secondary: 200 80% 70%;
+    --secondary-foreground: 0 0% 12%;
 
-    --muted: 60 33% 92%;
-    --muted-foreground: 0 0% 50%;
+    --accent: 45 100% 70%;
+    --accent-foreground: 0 0% 12%;
 
-    --accent: 170 33% 82%;
-    --accent-foreground: 0 0% 24%;
+    --muted: 45 20% 96%;
+    --muted-foreground: 0 0% 45%;
 
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 0 0% 98%;
 
-    --border: 20 15% 80%;
-    --input: 20 15% 80%;
+    --border: 0 0% 15%;
+    --input: 0 0% 15%;
     --ring: 10 83% 85%;
 
-    --radius: 1rem;
-
-    --sidebar-background: 38 75% 97%;
-    --sidebar-foreground: 0 0% 24%;
-    --sidebar-primary: 230 75% 83%;
-    --sidebar-primary-foreground: 0 0% 24%;
-    --sidebar-accent: 30 90% 73%;
-    --sidebar-accent-foreground: 0 0% 24%;
-    --sidebar-border: 20 15% 80%;
-    --sidebar-ring: 10 83% 85%;
+    --radius: 1.5rem;
   }
 
   .dark {
-    --background: 220 10% 5%;
+    --background: 0 0% 8%;
     --foreground: 0 0% 98%;
 
-    --card: 220 10% 8%;
+    --card: 0 0% 12%;
     --card-foreground: 0 0% 98%;
 
-    --popover: 220 10% 8%;
+    --popover: 0 0% 12%;
     --popover-foreground: 0 0% 98%;
 
-    --primary: 181 100% 50%;
-    --primary-foreground: 220 10% 5%;
+    --primary: 25 100% 65%;
+    --primary-foreground: 0 0% 12%;
 
-    --secondary: 327 100% 65%;
-    --secondary-foreground: 220 10% 5%;
+    --secondary: 200 80% 70%;
+    --secondary-foreground: 0 0% 12%;
 
-    --muted: 228 10% 15%;
+    --accent: 45 100% 70%;
+    --accent-foreground: 0 0% 12%;
+
+    --muted: 0 0% 20%;
     --muted-foreground: 0 0% 64%;
-
-    --accent: 271 100% 69%;
-    --accent-foreground: 0 0% 98%;
 
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 228 10% 20%;
-    --input: 228 10% 20%;
-    --ring: 273 100% 50%;
-
-    --sidebar-background: 220 10% 5%;
-    --sidebar-foreground: 0 0% 98%;
-    --sidebar-primary: 181 100% 50%;
-    --sidebar-primary-foreground: 220 10% 5%;
-    --sidebar-accent: 60 100% 50%;
-    --sidebar-accent-foreground: 220 10% 5%;
-    --sidebar-border: 228 10% 20%;
-    --sidebar-ring: 271 100% 69%;
+    --border: 0 0% 80%;
+    --input: 0 0% 80%;
+    --ring: 25 100% 65%;
   }
 }
 
@@ -97,81 +79,53 @@
   }
 
   body {
-    @apply bg-background text-foreground font-quicksand;
+    @apply bg-background text-foreground font-varela;
   }
 
-  .retro-box {
-    @apply border-2 rounded-2xl shadow-md transition-all;
+  /* New outlined UI components */
+  .outline-card {
+    @apply bg-white border-2 border-black rounded-2xl shadow-outline transition-transform duration-300;
   }
 
-  .retro-box-light {
-    @apply border-retro-coral/50 bg-white dark:border-disco-magenta dark:bg-disco-bg;
+  .outline-button {
+    @apply flex items-center justify-center gap-2 rounded-full border-2 border-black bg-primary text-primary-foreground font-medium shadow-outline transition-all duration-300 hover:scale-105;
   }
 
-  .retro-box-primary {
-    @apply border-retro-primary/50 bg-white dark:border-disco-blue dark:bg-disco-bg;
+  .outline-button-secondary {
+    @apply flex items-center justify-center gap-2 rounded-full border-2 border-black bg-secondary text-secondary-foreground font-medium shadow-outline transition-all duration-300 hover:scale-105;
   }
 
-  .retro-box-mint {
-    @apply border-retro-mint/50 bg-white dark:border-disco-teal dark:bg-disco-bg;
+  .outline-button-accent {
+    @apply flex items-center justify-center gap-2 rounded-full border-2 border-black bg-accent text-accent-foreground font-medium shadow-outline transition-all duration-300 hover:scale-105;
   }
 
-  .retro-box-yellow {
-    @apply border-retro-yellow/50 bg-white dark:border-disco-yellow dark:bg-disco-bg;
+  .outline-input {
+    @apply rounded-xl border-2 border-black bg-white p-2 shadow-outline focus:outline-none focus:ring-2 focus:ring-primary;
   }
 
-  .retro-pill {
-    @apply rounded-full px-3 py-1 text-sm font-medium;
-  }
-
-  .retro-pill-pink {
-    @apply bg-retro-pink text-retro-text dark:bg-disco-magenta dark:text-white;
-  }
-
-  .retro-pill-primary {
-    @apply bg-retro-primary text-retro-text dark:bg-disco-blue dark:text-disco-bg;
-  }
-
-  .retro-pill-mint {
-    @apply bg-retro-mint text-retro-text dark:bg-disco-teal dark:text-disco-bg;
-  }
-
-  .retro-pill-yellow {
-    @apply bg-retro-yellow text-retro-text dark:bg-disco-yellow dark:text-disco-bg;
-  }
-
-  .retro-pill-coral {
-    @apply bg-retro-coral text-white dark:bg-disco-magenta dark:text-white;
-  }
-
-  .glow {
-    @apply dark:shadow-[0_0_15px_rgba(0,255,247,0.5)];
-  }
-
-  .glow-magenta {
-    @apply dark:shadow-[0_0_15px_rgba(255,77,148,0.5)];
-  }
-
-  .glow-violet {
-    @apply dark:shadow-[0_0_15px_rgba(168,100,255,0.5)];
-  }
-
-  .glow-yellow {
-    @apply dark:shadow-[0_0_15px_rgba(249,255,0,0.5)];
-  }
-
-  .glow-teal {
-    @apply dark:shadow-[0_0_15px_rgba(0,224,184,0.5)];
+  .outline-pill {
+    @apply rounded-full px-3 py-1 text-sm font-medium border-2 border-black shadow-outline;
   }
 
   .nav-item {
-    @apply flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200
-    text-retro-text hover:bg-retro-primary/20 
-    dark:text-white dark:hover:bg-disco-blue/20;
+    @apply flex items-center gap-3 px-4 py-3 rounded-xl border-2 border-transparent 
+    transition-all duration-200 text-foreground hover:border-black hover:shadow-outline;
   }
 
   .nav-item.active {
-    @apply bg-retro-primary/30 font-medium
-    dark:bg-disco-blue/20 dark:text-disco-blue;
+    @apply border-black bg-accent shadow-outline font-medium;
+  }
+
+  .shadow-outline {
+    @apply shadow-[4px_4px_0px_0px_rgba(0,0,0,1)];
+  }
+
+  /* Animation utilities */
+  .hover-bounce {
+    @apply transition-transform hover:scale-105 active:scale-95;
+  }
+
+  .hover-bounce-sm {
+    @apply transition-transform hover:scale-102 active:scale-98;
   }
 }

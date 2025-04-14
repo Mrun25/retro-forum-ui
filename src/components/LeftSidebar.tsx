@@ -14,7 +14,7 @@ const navItems = [
 
 const LeftSidebar = () => {
   return (
-    <aside className="hidden md:flex flex-col w-60 p-4 border-r border-retro-yellow/30 dark:border-disco-blue/30">
+    <aside className="hidden md:flex flex-col w-60 p-4 border-r-2 border-black">
       <nav className="flex-1">
         <ul className="space-y-2">
           {navItems.map((item) => (
@@ -28,7 +28,7 @@ const LeftSidebar = () => {
         </ul>
       </nav>
       
-      <button className="retro-box retro-box-coral mt-6 w-full py-3 px-4 flex items-center justify-center gap-2 hover:scale-105 transition-all duration-300 text-white bg-retro-coral dark:bg-disco-magenta dark:border-disco-magenta glow-magenta">
+      <button className="outline-button-primary mt-6 w-full py-3 px-4 flex items-center justify-center gap-2 hover-bounce">
         <PlusCircle className="h-5 w-5" />
         <span className="font-medium">New Thread</span>
       </button>

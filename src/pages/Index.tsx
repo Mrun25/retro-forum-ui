@@ -8,7 +8,7 @@ import MobileNavigation from '../components/MobileNavigation';
 
 const Index = () => {
   return (
-    <div className="flex flex-col min-h-screen bg-retro-bg dark:bg-disco-bg">
+    <div className="flex flex-col min-h-screen bg-white">
       <TopNavBar />
       
       <div className="flex flex-1 overflow-hidden">

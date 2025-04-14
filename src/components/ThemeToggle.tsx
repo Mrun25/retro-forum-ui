@@ -31,13 +31,13 @@ const ThemeToggle = () => {
   return (
     <button 
       onClick={toggleTheme}
-      className="retro-box p-2 rounded-full hover:scale-105 transition-all duration-300"
+      className="outline-card p-2 rounded-full hover-bounce"
       aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
     >
       {isDarkMode ? (
-        <Moon className="h-5 w-5 text-disco-yellow" />
+        <Moon className="h-5 w-5 text-accent" />
       ) : (
-        <Sun className="h-5 w-5 text-retro-yellow" />
+        <Sun className="h-5 w-5 text-accent" />
       )}
     </button>
   );

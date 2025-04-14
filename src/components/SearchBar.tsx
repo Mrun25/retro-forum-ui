@@ -20,8 +20,8 @@ const SearchBar = () => {
 
   return (
     <div className="relative w-full max-w-xl">
-      <div className="retro-box retro-box-primary flex items-center px-4 py-2 w-full">
-        <Search className="h-5 w-5 text-muted-foreground flex-shrink-0" />
+      <div className="flex items-center px-4 py-2 w-full rounded-full border-2 border-black bg-white shadow-outline">
+        <Search className="h-5 w-5 text-black flex-shrink-0" />
         <input
           type="text"
           value={searchQuery}
@@ -32,13 +32,13 @@ const SearchBar = () => {
         <div className="relative">
           <button
             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-            className="retro-pill retro-pill-primary text-xs flex-shrink-0"
+            className="outline-pill bg-accent text-xs flex-shrink-0 hover-bounce-sm"
           >
             {selectedCategory}
           </button>
           
           {isDropdownOpen && (
-            <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-disco-bg border-2 dark:border-disco-blue rounded-xl shadow-lg z-50 py-1 glow">
+            <div className="absolute right-0 mt-2 w-48 bg-white border-2 border-black rounded-xl shadow-outline z-50 py-1">
               {categories.map((category) => (
                 <button
                   key={category}
@@ -46,7 +46,7 @@ const SearchBar = () => {
                     setSelectedCategory(category);
                     setIsDropdownOpen(false);
                   }}
-                  className="block w-full text-left px-4 py-2 text-sm hover:bg-retro-primary/20 dark:hover:bg-disco-blue/20"
+                  className="block w-full text-left px-4 py-2 text-sm hover:bg-accent/20"
                 >
                   {category}
                 </button>
