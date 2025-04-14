@@ -1,135 +1,151 @@
 
 import React, { useState } from 'react';
-import { PlusCircle, X } from 'lucide-react';
+import { Plus, X, FileText, Hash, Send } from 'lucide-react';
+import { toast } from 'sonner';
 
-interface NewThreadModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-}
+const CategoryOptions = ["Development", "Design", "Marketing", "Showcase", "General"];
 
-const NewThreadModal: React.FC<NewThreadModalProps> = ({ isOpen, onClose }) => {
+const NewThreadButton = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [category, setCategory] = useState('');
   const [tags, setTags] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // In a real app, this would create a new thread
-    console.log({ title, content, category, tags: tags.split(',').map(tag => tag.trim()) });
-    onClose();
+  const openModal = () => {
+    setIsModalOpen(true);
   };
 
-  if (!isOpen) return null;
+  const closeModal = () => {
+    setIsModalOpen(false);
+    // Reset form
+    setTitle('');
+    setContent('');
+    setCategory('');
+    setTags('');
+  };
 
-  return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-      <div className="outline-card bg-background w-full max-w-2xl p-6 relative">
-        <button 
-          onClick={onClose}
-          className="absolute top-4 right-4 text-muted-foreground hover:text-foreground transition-colors"
-          aria-label="Close modal"
-        >
-          <X className="h-6 w-6" />
-        </button>
-        
-        <h2 className="text-xl font-bold mb-6">Create New Thread</h2>
-        
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label htmlFor="title" className="block text-sm font-medium mb-1">Title</label>
-            <input
-              id="title"
-              type="text"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              className="outline-input w-full"
-              placeholder="Enter a descriptive title"
-              required
-            />
-          </div>
-          
-          <div>
-            <label htmlFor="category" className="block text-sm font-medium mb-1">Category</label>
-            <select
-              id="category"
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
-              className="outline-input w-full"
-              required
-            >
-              <option value="">Select a category</option>
-              <option value="Development">Development</option>
-              <option value="Design">Design</option>
-              <option value="Marketing">Marketing</option>
-              <option value="Showcase">Showcase</option>
-              <option value="General">General</option>
-            </select>
-          </div>
-          
-          <div>
-            <label htmlFor="content" className="block text-sm font-medium mb-1">Content</label>
-            <textarea
-              id="content"
-              value={content}
-              onChange={(e) => setContent(e.target.value)}
-              className="outline-input w-full min-h-[150px]"
-              placeholder="What's on your mind?"
-              required
-            />
-          </div>
-          
-          <div>
-            <label htmlFor="tags" className="block text-sm font-medium mb-1">Tags</label>
-            <input
-              id="tags"
-              type="text"
-              value={tags}
-              onChange={(e) => setTags(e.target.value)}
-              className="outline-input w-full"
-              placeholder="Separate tags with commas: react, javascript, design"
-            />
-          </div>
-          
-          <div className="flex justify-end gap-3 pt-4">
-            <button
-              type="button"
-              onClick={onClose}
-              className="outline-card px-4 py-2 hover-bounce-sm"
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              className="outline-button px-4 py-2"
-            >
-              Create Thread
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
-  );
-};
-
-const NewThreadButton = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    // Form validation
+    if (!title.trim() || !content.trim() || !category) {
+      toast.error('Please fill in all required fields');
+      return;
+    }
+    
+    // In a real app, we would save the thread to a database
+    toast.success('Thread created successfully!');
+    closeModal();
+  };
 
   return (
     <>
       <button
-        onClick={() => setIsModalOpen(true)}
-        className="floating-button glow-effect"
+        onClick={openModal}
+        className="fixed bottom-6 right-6 outline-card bg-primary text-primary-foreground rounded-full p-4 shadow-lg hover-bounce z-30"
         aria-label="Create new thread"
       >
-        <PlusCircle className="h-5 w-5" />
-        <span className="font-medium">New Thread</span>
+        <Plus className="h-6 w-6" />
       </button>
-      
-      <NewThreadModal 
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-      />
+
+      {isModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+          <div className="bg-background border-2 border-border rounded-xl w-full max-w-lg mx-4 max-h-[90vh] overflow-y-auto">
+            <div className="flex justify-between items-center p-4 border-b-2 border-border">
+              <h2 className="text-xl font-bold">Create New Thread</h2>
+              <button 
+                onClick={closeModal}
+                className="outline-pill p-1"
+                aria-label="Close modal"
+              >
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+            
+            <form onSubmit={handleSubmit} className="p-6 space-y-4">
+              <div>
+                <label className="block text-sm font-medium mb-1">Thread Title <span className="text-destructive">*</span></label>
+                <div className="flex border-2 border-border rounded-lg overflow-hidden">
+                  <div className="bg-muted flex items-center px-3">
+                    <FileText className="h-5 w-5 text-muted-foreground" />
+                  </div>
+                  <input
+                    type="text"
+                    placeholder="What's your thread about?"
+                    className="flex-1 p-2 outline-none bg-transparent"
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                    required
+                  />
+                </div>
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium mb-1">Category <span className="text-destructive">*</span></label>
+                <select
+                  className="border-2 border-border rounded-lg p-2 w-full bg-transparent"
+                  value={category}
+                  onChange={(e) => setCategory(e.target.value)}
+                  required
+                >
+                  <option value="" disabled>Select a category</option>
+                  {CategoryOptions.map((cat) => (
+                    <option key={cat} value={cat}>
+                      {cat}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium mb-1">Thread Content <span className="text-destructive">*</span></label>
+                <textarea
+                  placeholder="Share your thoughts, questions, or insights..."
+                  className="border-2 border-border rounded-lg p-2 w-full h-32 resize-none bg-transparent"
+                  value={content}
+                  onChange={(e) => setContent(e.target.value)}
+                  required
+                />
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium mb-1">Tags <span className="text-muted-foreground">(comma-separated)</span></label>
+                <div className="flex border-2 border-border rounded-lg overflow-hidden">
+                  <div className="bg-muted flex items-center px-3">
+                    <Hash className="h-5 w-5 text-muted-foreground" />
+                  </div>
+                  <input
+                    type="text"
+                    placeholder="webdev, design, help"
+                    className="flex-1 p-2 outline-none bg-transparent"
+                    value={tags}
+                    onChange={(e) => setTags(e.target.value)}
+                  />
+                </div>
+                <p className="text-xs text-muted-foreground mt-1">Add relevant tags to help others find your thread</p>
+              </div>
+              
+              <div className="pt-4 border-t-2 border-border flex justify-end gap-3">
+                <button
+                  type="button"
+                  onClick={closeModal}
+                  className="outline-pill bg-background"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="outline-pill bg-primary text-primary-foreground flex items-center gap-2"
+                >
+                  <Send className="h-4 w-4" />
+                  Publish Thread
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </>
   );
 };

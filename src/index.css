@@ -1,71 +1,95 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&family=Varela+Round:wght@400&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --outline-width: 2px;
+  --outline-color: #000000;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+}
+
+.dark {
+  --outline-width: 2px;
+  --outline-color: #ffffff;
+  --shadow-color: rgba(255, 255, 255, 0.05);
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
-    --foreground: 0 0% 12%;
-
+    --foreground: 240 10% 3.9%;
+    
     --card: 0 0% 100%;
-    --card-foreground: 0 0% 12%;
-
+    --card-foreground: 240 10% 3.9%;
+    
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 12%;
-
-    --primary: 25 100% 65%;
-    --primary-foreground: 0 0% 12%;
-
-    --secondary: 200 80% 70%;
-    --secondary-foreground: 0 0% 12%;
-
-    --accent: 45 100% 70%;
-    --accent-foreground: 0 0% 12%;
-
-    --muted: 45 20% 96%;
-    --muted-foreground: 0 0% 45%;
-
+    --popover-foreground: 240 10% 3.9%;
+    
+    --primary: 240 5.9% 10%;
+    --primary-foreground: 0 0% 98%;
+    
+    --secondary: 142 69% 58%;
+    --secondary-foreground: 240 5.9% 10%;
+    
+    --accent: 262 83% 76%;
+    --accent-foreground: 240 5.9% 10%;
+    
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+    
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
+    
+    --sidebar: 0 0% 100%;
+    --sidebar-foreground: 240 10% 3.9%;
+    --sidebar-border: 240 5.9% 90%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-ring: 240 5% 64.9%;
 
-    --border: 0 0% 15%;
-    --input: 0 0% 15%;
-    --ring: 10 83% 85%;
-
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 240 5.9% 10%;
+    
     --radius: 1.5rem;
   }
-
+  
   .dark {
-    --background: 0 0% 5%;
+    --background: 240 10% 3.9%;
     --foreground: 0 0% 98%;
-
-    --card: 0 0% 8%;
+    
+    --card: 240 10% 3.9%;
     --card-foreground: 0 0% 98%;
-
-    --popover: 0 0% 8%;
+    
+    --popover: 240 10% 3.9%;
     --popover-foreground: 0 0% 98%;
-
-    --primary: 25 100% 65%;
-    --primary-foreground: 0 0% 12%;
-
-    --secondary: 200 80% 70%;
-    --secondary-foreground: 0 0% 12%;
-
-    --accent: 45 100% 70%;
-    --accent-foreground: 0 0% 12%;
-
-    --muted: 0 0% 20%;
-    --muted-foreground: 0 0% 64%;
-
+    
+    --primary: 0 0% 98%;
+    --primary-foreground: 240 5.9% 10%;
+    
+    --secondary: 142 69% 58%;
+    --secondary-foreground: 240 5.9% 10%;
+    
+    --accent: 262 83% 76%;
+    --accent-foreground: 240 5.9% 10%;
+    
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+    
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
+    
+    --sidebar: 240 10% 3.9%;
+    --sidebar-foreground: 0 0% 98%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 0 0% 98%;
+    --sidebar-ring: 240 4.9% 83.9%;
 
-    --border: 0 0% 80%;
-    --input: 0 0% 80%;
-    --ring: 25 100% 65%;
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 240 4.9% 83.9%;
   }
 }
 
@@ -73,78 +97,56 @@
   * {
     @apply border-border;
   }
-
-  html, body, #root {
-    @apply h-full;
-  }
-
+  
   body {
-    @apply bg-background text-foreground font-varela transition-colors duration-300;
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
   }
+}
 
-  /* New outlined UI components */
+@layer components {
   .outline-card {
-    @apply bg-background border-2 border-border rounded-2xl shadow-outline transition-transform duration-300;
+    @apply rounded-xl border-[var(--outline-width)] border-[var(--outline-color)] bg-card;
   }
-
-  .outline-button {
-    @apply flex items-center justify-center gap-2 rounded-full border-2 border-border bg-primary text-primary-foreground font-medium shadow-outline transition-all duration-300 hover:scale-105;
-  }
-
-  .outline-button-secondary {
-    @apply flex items-center justify-center gap-2 rounded-full border-2 border-border bg-secondary text-secondary-foreground font-medium shadow-outline transition-all duration-300 hover:scale-105;
-  }
-
-  .outline-button-accent {
-    @apply flex items-center justify-center gap-2 rounded-full border-2 border-border bg-accent text-accent-foreground font-medium shadow-outline transition-all duration-300 hover:scale-105;
-  }
-
-  .outline-input {
-    @apply rounded-xl border-2 border-border bg-background p-2 shadow-outline focus:outline-none focus:ring-2 focus:ring-primary;
-  }
-
+  
   .outline-pill {
-    @apply rounded-full px-3 py-1 text-sm font-medium border-2 border-border shadow-outline;
+    @apply rounded-full border-[var(--outline-width)] border-[var(--outline-color)] bg-background px-3 py-1 text-sm font-medium;
   }
-
-  .nav-item {
-    @apply flex items-center gap-3 px-4 py-3 rounded-xl border-2 border-transparent 
-    transition-all duration-200 text-foreground hover:border-border hover:shadow-outline;
-  }
-
-  .nav-item.active {
-    @apply border-border bg-accent shadow-outline font-medium;
-  }
-
-  .dark .shadow-outline {
-    @apply shadow-[4px_4px_0px_0px_rgba(255,255,255,1)];
-  }
-
+  
   .shadow-outline {
-    @apply shadow-[4px_4px_0px_0px_rgba(0,0,0,1)];
+    @apply shadow-[4px_4px_0px_var(--outline-color)];
   }
-
-  /* Animation utilities */
+  
+  .nav-item {
+    @apply flex items-center gap-2 p-2 rounded-xl transition-colors duration-200 hover:bg-accent/10;
+  }
+  
+  .nav-item.active {
+    @apply bg-accent/20 font-medium;
+  }
+  
   .hover-bounce {
-    @apply transition-transform hover:scale-105 active:scale-95;
+    @apply transition duration-200 hover:scale-105 active:scale-95;
   }
-
+  
   .hover-bounce-sm {
-    @apply transition-transform hover:scale-102 active:scale-98;
+    @apply transition duration-200 hover:scale-[1.02] active:scale-[0.98];
   }
+  
+  .animate-wobble {
+    animation: wobble 0.3s ease-in-out;
+  }
+  
+  .glow-effect {
+    @apply relative;
+    filter: drop-shadow(0 0 3px theme('colors.accent.DEFAULT'));
+  }
+}
 
-  /* Dark mode glow effects */
-  .dark .glow-effect {
-    @apply animate-pulse-glow;
-  }
-
-  /* Sticky sidebar */
-  .sticky-sidebar {
-    @apply sticky top-20 h-[calc(100vh-80px)] overflow-y-auto;
-  }
-
-  /* New thread floating button */
-  .floating-button {
-    @apply fixed bottom-6 right-6 z-50 outline-button py-3 px-4 hover:scale-110 active:scale-95;
-  }
+@keyframes wobble {
+  0% { transform: rotate(0deg); }
+  25% { transform: rotate(-5deg); }
+  50% { transform: rotate(0deg); }
+  75% { transform: rotate(5deg); }
+  100% { transform: rotate(0deg); }
 }
