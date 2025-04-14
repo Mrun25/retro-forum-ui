@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Home, FolderOpen, MessageCircle, Bookmark, Bell, MessageSquare, Settings, PlusCircle } from 'lucide-react';
 
 const navItems = [
@@ -13,13 +13,26 @@ const navItems = [
 ];
 
 const LeftSidebar = () => {
+  const [activeItem, setActiveItem] = useState('Home');
+
+  const handleItemClick = (label: string) => {
+    setActiveItem(label);
+  };
+
   return (
-    <aside className="hidden md:flex flex-col w-60 p-4 border-r-2 border-black">
-      <nav className="flex-1">
+    <aside className="hidden md:flex flex-col w-60 border-r-2 border-border sticky-sidebar">
+      <nav className="flex-1 p-4">
         <ul className="space-y-2">
           {navItems.map((item) => (
             <li key={item.label}>
-              <a href="#" className={`nav-item ${item.active ? 'active' : ''}`}>
+              <a 
+                href="#" 
+                className={`nav-item ${activeItem === item.label ? 'active' : ''}`}
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleItemClick(item.label);
+                }}
+              >
                 <item.icon className="h-5 w-5" />
                 <span>{item.label}</span>
               </a>
@@ -27,11 +40,6 @@ const LeftSidebar = () => {
           ))}
         </ul>
       </nav>
-      
-      <button className="outline-button-primary mt-6 w-full py-3 px-4 flex items-center justify-center gap-2 hover-bounce">
-        <PlusCircle className="h-5 w-5" />
-        <span className="font-medium">New Thread</span>
-      </button>
     </aside>
   );
 };

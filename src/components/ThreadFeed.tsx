@@ -1,7 +1,6 @@
-
 import React, { useState } from 'react';
 import ThreadCard from './ThreadCard';
-import { ArrowDownAZ, FlameKindling, UserRound, ThumbsUp } from 'lucide-react';
+import { ArrowDownAZ, FlameKindling, UserRound, ThumbsUp, MessageSquare } from 'lucide-react';
 
 // Mock data for thread cards
 const threadsData = [
@@ -76,12 +75,57 @@ const sortOptions = [
   { label: "Latest", icon: ArrowDownAZ },
   { label: "Trending", icon: FlameKindling },
   { label: "My Activity", icon: UserRound },
-  { label: "Most Liked", icon: ThumbsUp }
+  { label: "Most Liked", icon: ThumbsUp },
+  { label: "Most Commented", icon: MessageSquare }
 ];
 
 const ThreadFeed = () => {
   const [selectedSort, setSelectedSort] = useState("Latest");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [displayedThreads, setDisplayedThreads] = useState(threadsData);
+
+  const handleSortChange = (sortOption: string) => {
+    setSelectedSort(sortOption);
+    
+    let sortedThreads = [...threadsData];
+    
+    switch(sortOption) {
+      case "Latest":
+        // Using timeAgo as a proxy for recency (in a real app would use timestamps)
+        sortedThreads.sort((a, b) => a.timeAgo.localeCompare(b.timeAgo));
+        break;
+      case "Most Liked":
+        sortedThreads.sort((a, b) => b.upvotes - a.upvotes);
+        break;
+      case "Most Commented":
+        sortedThreads.sort((a, b) => b.replyCount - a.replyCount);
+        break;
+      // Other sort options would have similar logic
+    }
+    
+    // Apply category filter if one is selected
+    if (selectedCategory) {
+      sortedThreads = sortedThreads.filter(thread => thread.category === selectedCategory);
+    }
+    
+    setDisplayedThreads(sortedThreads);
+    setIsDropdownOpen(false);
+  };
+
+  const filterByCategory = (category: string) => {
+    if (selectedCategory === category) {
+      // If clicking the same category, clear the filter
+      setSelectedCategory(null);
+      setDisplayedThreads(threadsData);
+    } else {
+      setSelectedCategory(category);
+      setDisplayedThreads(threadsData.filter(thread => thread.category === category));
+    }
+  };
+
+  // Get unique categories for category filter
+  const categories = [...new Set(threadsData.map(thread => thread.category))];
 
   return (
     <div className="flex-1 py-6 px-4">
@@ -98,15 +142,12 @@ const ThreadFeed = () => {
           </button>
           
           {isDropdownOpen && (
-            <div className="absolute right-0 mt-2 w-40 bg-white border-2 border-black rounded-xl shadow-outline z-40 py-1">
+            <div className="absolute right-0 mt-2 w-48 bg-background border-2 border-border rounded-xl shadow-outline z-40 py-1">
               {sortOptions.map((option) => (
                 <button
                   key={option.label}
-                  onClick={() => {
-                    setSelectedSort(option.label);
-                    setIsDropdownOpen(false);
-                  }}
-                  className="flex items-center gap-2 w-full text-left px-4 py-2 text-sm hover:bg-accent/20"
+                  onClick={() => handleSortChange(option.label)}
+                  className={`flex items-center gap-2 w-full text-left px-4 py-2 text-sm hover:bg-accent/20 ${selectedSort === option.label ? 'font-medium bg-accent/10' : ''}`}
                 >
                   <option.icon className="h-4 w-4" />
                   {option.label}
@@ -117,8 +158,34 @@ const ThreadFeed = () => {
         </div>
       </div>
       
+      {/* Category filters */}
+      <div className="flex gap-2 mb-6 overflow-x-auto pb-2">
+        {categories.map(category => (
+          <button
+            key={category}
+            onClick={() => filterByCategory(category)}
+            className={`outline-pill whitespace-nowrap ${
+              selectedCategory === category ? 'bg-accent' : 'bg-background'
+            }`}
+          >
+            {category}
+          </button>
+        ))}
+        {selectedCategory && (
+          <button
+            onClick={() => {
+              setSelectedCategory(null);
+              setDisplayedThreads(threadsData);
+            }}
+            className="outline-pill bg-destructive text-destructive-foreground whitespace-nowrap"
+          >
+            Clear Filter
+          </button>
+        )}
+      </div>
+      
       <div className="grid grid-cols-1 gap-5">
-        {threadsData.map((thread) => (
+        {displayedThreads.map((thread) => (
           <ThreadCard key={thread.id} {...thread} />
         ))}
       </div>

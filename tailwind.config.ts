@@ -90,6 +90,14 @@ export default {
 				'bounce-small': {
 					'0%, 100%': { transform: 'translateY(0)' },
 					'50%': { transform: 'translateY(-3px)' }
+				},
+				'pulse-glow': {
+					'0%, 100%': { 
+						'box-shadow': '0 0 5px 2px rgba(255, 255, 255, 0.3)'
+					},
+					'50%': { 
+						'box-shadow': '0 0 8px 4px rgba(255, 255, 255, 0.5)' 
+					}
 				}
 			},
 			animation: {
@@ -97,7 +105,8 @@ export default {
 				'accordion-up': 'accordion-up 0.2s ease-out',
 				'float': 'float 3s ease-in-out infinite',
 				'wobble': 'wobble 0.4s ease-in-out',
-				'bounce-small': 'bounce-small 2s ease-in-out infinite'
+				'bounce-small': 'bounce-small 2s ease-in-out infinite',
+				'pulse-glow': 'pulse-glow 2s ease-in-out infinite'
 			},
 			fontFamily: {
 				'quicksand': ['Quicksand', 'sans-serif'],

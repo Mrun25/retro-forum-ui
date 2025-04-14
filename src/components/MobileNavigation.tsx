@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Home, FolderOpen, Bookmark, Bell, PlusCircle, User } from 'lucide-react';
+import { Home, FolderOpen, Bookmark, Bell, User } from 'lucide-react';
 
 const navItems = [
   { icon: Home, label: 'Home', active: true },
@@ -12,7 +12,7 @@ const navItems = [
 
 const MobileNavigation = () => {
   return (
-    <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t-2 border-black py-2 px-6 z-50">
+    <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-background border-t-2 border-border py-2 px-6 z-40">
       <ul className="flex justify-between items-center">
         {navItems.map((item) => (
           <li key={item.label}>
@@ -28,10 +28,6 @@ const MobileNavigation = () => {
           </li>
         ))}
       </ul>
-
-      <button className="absolute -top-6 left-1/2 transform -translate-x-1/2 outline-button p-3 rounded-full hover-bounce">
-        <PlusCircle className="h-6 w-6" />
-      </button>
     </nav>
   );
 };

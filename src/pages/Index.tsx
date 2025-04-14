@@ -5,10 +5,11 @@ import LeftSidebar from '../components/LeftSidebar';
 import RightSidebar from '../components/RightSidebar';
 import ThreadFeed from '../components/ThreadFeed';
 import MobileNavigation from '../components/MobileNavigation';
+import NewThreadButton from '../components/NewThreadButton';
 
 const Index = () => {
   return (
-    <div className="flex flex-col min-h-screen bg-white">
+    <div className="flex flex-col min-h-screen bg-background">
       <TopNavBar />
       
       <div className="flex flex-1 overflow-hidden">
@@ -25,6 +26,7 @@ const Index = () => {
       </div>
       
       <MobileNavigation />
+      <NewThreadButton />
     </div>
   );
 };

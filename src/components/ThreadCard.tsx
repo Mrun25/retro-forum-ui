@@ -1,6 +1,6 @@
 
-import React from 'react';
-import { MessageSquare, Bookmark, ArrowUp, ArrowDown, Clock } from 'lucide-react';
+import React, { useState } from 'react';
+import { MessageSquare, Bookmark, BookmarkCheck, ArrowUp, ArrowDown, Clock } from 'lucide-react';
 
 type ThreadCardProps = {
   title: string;
@@ -24,9 +24,13 @@ const ThreadCard = ({
   avatar,
   replyCount,
   timeAgo,
-  upvotes,
+  upvotes: initialUpvotes,
   tags
 }: ThreadCardProps) => {
+  const [upvotes, setUpvotes] = useState(initialUpvotes);
+  const [userVote, setUserVote] = useState<'up' | 'down' | null>(null);
+  const [isBookmarked, setIsBookmarked] = useState(false);
+
   // Map the category to appropriate colors for outlined design
   const getCategoryPillClass = () => {
     if (category === "Development") return "bg-secondary";
@@ -36,14 +40,46 @@ const ThreadCard = ({
     return "bg-[#D1F5E0]"; // General
   };
 
+  const handleUpvote = () => {
+    if (userVote === 'up') {
+      setUpvotes(upvotes - 1);
+      setUserVote(null);
+    } else {
+      setUpvotes(userVote === 'down' ? upvotes + 2 : upvotes + 1);
+      setUserVote('up');
+    }
+  };
+
+  const handleDownvote = () => {
+    if (userVote === 'down') {
+      setUpvotes(upvotes + 1);
+      setUserVote(null);
+    } else {
+      setUpvotes(userVote === 'up' ? upvotes - 2 : upvotes - 1);
+      setUserVote('down');
+    }
+  };
+
+  const toggleBookmark = () => {
+    setIsBookmarked(!isBookmarked);
+  };
+
   return (
     <article className="outline-card p-5 transition-all duration-300 hover-bounce">
       <div className="flex justify-between items-start mb-3">
         <div className={`outline-pill ${getCategoryPillClass()}`}>
           {category}
         </div>
-        <button className="text-muted-foreground hover:text-black">
-          <Bookmark className="h-5 w-5" />
+        <button 
+          className="text-muted-foreground hover:text-foreground transition-colors duration-200"
+          onClick={toggleBookmark}
+          aria-label={isBookmarked ? "Remove bookmark" : "Add bookmark"}
+        >
+          {isBookmarked ? (
+            <BookmarkCheck className="h-5 w-5 text-accent" />
+          ) : (
+            <Bookmark className="h-5 w-5" />
+          )}
         </button>
       </div>
       
@@ -52,7 +88,7 @@ const ThreadCard = ({
       
       <div className="flex flex-wrap gap-2 mb-4">
         {tags.map((tag) => (
-          <span key={tag} className="text-xs border-2 border-black bg-white px-2 py-1 rounded-full">
+          <span key={tag} className="text-xs border-2 border-border bg-background px-2 py-1 rounded-full">
             #{tag}
           </span>
         ))}
@@ -60,7 +96,7 @@ const ThreadCard = ({
       
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <img src={avatar} alt={username} className="h-7 w-7 rounded-full border-2 border-black" />
+          <img src={avatar} alt={username} className="h-7 w-7 rounded-full border-2 border-border" />
           <span className="text-sm font-medium">{username}</span>
         </div>
         
@@ -75,12 +111,20 @@ const ThreadCard = ({
             <span className="text-xs">{replyCount}</span>
           </div>
           
-          <div className="flex items-center outline-pill bg-white py-0">
-            <button className="p-1 hover:animate-wobble">
+          <div className="flex items-center outline-pill bg-background py-0">
+            <button 
+              className={`p-1 hover:animate-wobble ${userVote === 'up' ? 'text-accent' : ''}`}
+              onClick={handleUpvote}
+              aria-label="Upvote"
+            >
               <ArrowUp className="h-4 w-4" />
             </button>
             <span className="text-xs font-medium mx-1">{upvotes}</span>
-            <button className="p-1 hover:animate-wobble">
+            <button 
+              className={`p-1 hover:animate-wobble ${userVote === 'down' ? 'text-destructive' : ''}`}
+              onClick={handleDownvote}
+              aria-label="Downvote"
+            >
               <ArrowDown className="h-4 w-4" />
             </button>
           </div>
