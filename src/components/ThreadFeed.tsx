@@ -137,7 +137,7 @@ const ThreadFeed = () => {
           </button>
           
           {isDropdownOpen && (
-            <div className="absolute right-0 mt-2 w-48 bg-background border-2 border-[var(--outline-color)] rounded-xl shadow-outline z-40 py-1">
+            <div className="absolute right-0 mt-2 w-48 bg-background border-2 border-border rounded-xl shadow-outline z-40 py-1">
               {sortOptions.map((option) => (
                 <button
                   key={option.label}

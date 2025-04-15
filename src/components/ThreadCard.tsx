@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { MessageSquare, Bookmark, BookmarkCheck, ArrowUp, ArrowDown, Clock, X, Send } from 'lucide-react';
 import { toast } from 'sonner';
+import { useBookmarkContext } from './BookmarkedPanel';
 
 type ThreadCardProps = {
   title: string;
@@ -17,6 +18,7 @@ type ThreadCardProps = {
 };
 
 const ThreadCard = ({
+  id,
   title,
   category,
   categoryColor,
@@ -30,7 +32,6 @@ const ThreadCard = ({
 }: ThreadCardProps) => {
   const [upvotes, setUpvotes] = useState(initialUpvotes);
   const [userVote, setUserVote] = useState<'up' | 'down' | null>(null);
-  const [isBookmarked, setIsBookmarked] = useState(false);
   const [replyCount, setReplyCount] = useState(initialReplyCount);
   const [showComments, setShowComments] = useState(false);
   const [newComment, setNewComment] = useState('');
@@ -50,6 +51,10 @@ const ThreadCard = ({
       timeAgo: "30m ago"
     }
   ]);
+
+  // Use the bookmark context
+  const { isBookmarked, addBookmark, removeBookmark } = useBookmarkContext();
+  const threadIsBookmarked = isBookmarked(id);
 
   // Map the category to appropriate colors for outlined design
   const getCategoryPillClass = () => {
@@ -89,9 +94,16 @@ const ThreadCard = ({
   };
 
   const toggleBookmark = () => {
-    setIsBookmarked(!isBookmarked);
-    
-    toast.success(isBookmarked ? "Removed from bookmarks" : "Added to bookmarks");
+    if (threadIsBookmarked) {
+      removeBookmark(id);
+    } else {
+      addBookmark({
+        id,
+        title,
+        username,
+        timeAgo
+      });
+    }
   };
   
   const toggleComments = () => {
@@ -123,11 +135,11 @@ const ThreadCard = ({
           {category}
         </div>
         <button 
-          className="text-muted-foreground hover:text-foreground transition-colors duration-200"
+          className="text-muted-foreground hover:text-foreground transition-colors duration-200 hover:animate-wobble"
           onClick={toggleBookmark}
-          aria-label={isBookmarked ? "Remove bookmark" : "Add bookmark"}
+          aria-label={threadIsBookmarked ? "Remove bookmark" : "Add bookmark"}
         >
-          {isBookmarked ? (
+          {threadIsBookmarked ? (
             <BookmarkCheck className="h-5 w-5 text-accent" />
           ) : (
             <Bookmark className="h-5 w-5" />

@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { MessageSquare, Bell, User } from 'lucide-react';
 import ThemeToggle from './ThemeToggle';
@@ -126,7 +125,7 @@ const TopNavBar = () => {
   const [unreadMessages, setUnreadMessages] = useState(2);
 
   return (
-    <header className="sticky top-0 z-50 bg-background py-3 px-4 border-b-2 border-border">
+    <header className="sticky top-0 z-50 bg-background pt-2 pb-2 px-4 border-b-2 border-border">
       <div className="container mx-auto flex items-center justify-between">
         <div className="flex items-center">
           <h1 className="text-2xl font-bold mr-6">
@@ -199,7 +198,7 @@ const TopNavBar = () => {
           </button>
         </div>
       </div>
-      <div className="md:hidden mt-3 px-4">
+      <div className="md:hidden mt-2 px-4">
         <SearchBar />
       </div>
       
