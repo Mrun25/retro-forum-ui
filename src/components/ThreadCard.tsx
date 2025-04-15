@@ -92,7 +92,7 @@ const ThreadCard = ({
   };
 
   return (
-    <article className="outline-card p-5 transition-all duration-300 hover-bounce">
+    <article className="outline-card p-5 transition-all duration-300 hover-bounce border-[var(--outline-width)] border-[var(--outline-color)]">
       <div className="flex justify-between items-start mb-3">
         <CategoryPill category={category} />
         <button 

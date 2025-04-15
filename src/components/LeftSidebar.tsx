@@ -56,7 +56,7 @@ const LeftSidebar = ({ setActiveSection }) => {
           {navItems.map((item) => (
             <li key={item.label}>
               <button 
-                className={`nav-item relative w-full text-left ${activeMenu === item.label ? 'active' : ''}`}
+                className={`nav-item relative w-full text-left ${activeMenu === item.label ? 'active outline-card' : ''}`}
                 onClick={() => handleNavClick(item.label)}
               >
                 <item.icon className="h-5 w-5" />
