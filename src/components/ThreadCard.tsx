@@ -5,6 +5,7 @@ import { toast } from 'sonner';
 import { useBookmarkContext } from './BookmarkedPanel';
 
 type ThreadCardProps = {
+  id: number;  // Add the id property to the type
   title: string;
   category: string;
   categoryColor: string;
@@ -18,7 +19,7 @@ type ThreadCardProps = {
 };
 
 const ThreadCard = ({
-  id,
+  id,  // Destructure id from props
   title,
   category,
   categoryColor,
