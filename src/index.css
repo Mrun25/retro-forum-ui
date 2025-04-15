@@ -110,7 +110,7 @@
   }
   
   .outline-pill {
-    @apply rounded-full border-[var(--outline-width)] border-[var(--outline-color)] bg-background px-3 py-1 text-sm font-medium;
+    @apply rounded-full border-[var(--outline-width)] border-[var(--outline-color)] px-3 py-1 text-sm font-medium;
   }
   
   .shadow-outline {

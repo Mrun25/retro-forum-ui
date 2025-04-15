@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Home, MessageCircle, Bookmark, Bell, MessageSquare, Settings, Trash2, User } from 'lucide-react';
+import { Home, MessageCircle, Bookmark, Bell, MessageSquare, Settings, User } from 'lucide-react';
 import { toast } from 'sonner';
 
 const initialMyThreads = [
