@@ -50,7 +50,7 @@ const LeftSidebar = ({ setActiveSection }) => {
   };
 
   return (
-    <aside className="fixed left-0 top-16 w-64 border-2 border-[var(--outline-color)] rounded-r-xl bg-background h-[calc(100vh-4rem)] overflow-y-auto z-30">
+    <aside className="fixed left-0 top-16 w-64 outline-card bg-background h-[calc(100vh-4rem)] overflow-y-auto z-30">
       <nav className="p-4">
         <ul className="space-y-2">
           {navItems.map((item) => (

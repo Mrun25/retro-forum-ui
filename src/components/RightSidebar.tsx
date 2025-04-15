@@ -18,7 +18,7 @@ const recentThreads = [
 
 const RightSidebar = () => {
   return (
-    <aside className="hidden lg:flex flex-col w-72 border-l-2 border-border sticky-sidebar">
+    <aside className="hidden lg:flex flex-col w-72 outline-card border-l-0 border-r-0 border-t-0 sticky-sidebar">
       <div className="p-4 space-y-6">
         {/* User Profile Snippet */}
         <div className="outline-card p-4">
@@ -26,7 +26,7 @@ const RightSidebar = () => {
             <img
               src="https://api.dicebear.com/7.x/adventurer/svg?seed=Felix"
               alt="User avatar"
-              className="h-12 w-12 rounded-full border-2 border-border"
+              className="h-12 w-12 rounded-full border-[var(--outline-width)] border-[var(--outline-color)]"
             />
             <div>
               <h3 className="font-medium">Alex Johnson</h3>
