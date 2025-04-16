@@ -1,17 +1,15 @@
+
 import React, { useState } from 'react';
 import { MessageSquare, Bell, User } from 'lucide-react';
 import ThemeToggle from './ThemeToggle';
 import SearchBar from './SearchBar';
-import UserProfile from './UserProfile';
-import { toast } from 'sonner';
 
 interface NotificationDropdownProps {
   isOpen: boolean;
   onClose: () => void;
-  onMarkAllRead: () => void;
 }
 
-const NotificationDropdown: React.FC<NotificationDropdownProps> = ({ isOpen, onClose, onMarkAllRead }) => {
+const NotificationDropdown: React.FC<NotificationDropdownProps> = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
   
   return (
@@ -42,13 +40,7 @@ const NotificationDropdown: React.FC<NotificationDropdownProps> = ({ isOpen, onC
         </div>
       </div>
       <div className="p-3 border-t-2 border-border">
-        <button 
-          className="w-full text-center text-sm text-primary hover:underline"
-          onClick={() => {
-            onMarkAllRead();
-            toast.success('All notifications marked as read');
-          }}
-        >
+        <button className="w-full text-center text-sm text-primary hover:underline">
           Mark all as read
         </button>
       </div>
@@ -59,10 +51,9 @@ const NotificationDropdown: React.FC<NotificationDropdownProps> = ({ isOpen, onC
 interface MessageDropdownProps {
   isOpen: boolean;
   onClose: () => void;
-  onMarkAllRead: () => void;
 }
 
-const MessageDropdown: React.FC<MessageDropdownProps> = ({ isOpen, onClose, onMarkAllRead }) => {
+const MessageDropdown: React.FC<MessageDropdownProps> = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
   
   return (
@@ -103,13 +94,7 @@ const MessageDropdown: React.FC<MessageDropdownProps> = ({ isOpen, onClose, onMa
         </div>
       </div>
       <div className="p-3 border-t-2 border-border">
-        <button 
-          className="w-full text-center text-sm text-primary hover:underline"
-          onClick={() => {
-            onMarkAllRead();
-            toast.success('All messages marked as read');
-          }}
-        >
+        <button className="w-full text-center text-sm text-primary hover:underline">
           View all messages
         </button>
       </div>
@@ -120,12 +105,9 @@ const MessageDropdown: React.FC<MessageDropdownProps> = ({ isOpen, onClose, onMa
 const TopNavBar = () => {
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
   const [isMessagesOpen, setIsMessagesOpen] = useState(false);
-  const [isProfileOpen, setIsProfileOpen] = useState(false);
-  const [unreadNotifications, setUnreadNotifications] = useState(3);
-  const [unreadMessages, setUnreadMessages] = useState(2);
 
   return (
-    <header className="sticky top-0 z-50 bg-background pt-2 pb-2 px-4 border-b-2 border-border">
+    <header className="sticky top-0 z-50 bg-background py-3 px-4 border-b-2 border-border">
       <div className="container mx-auto flex items-center justify-between">
         <div className="flex items-center">
           <h1 className="text-2xl font-bold mr-6">
@@ -139,7 +121,7 @@ const TopNavBar = () => {
         <div className="flex items-center gap-4">
           <div className="relative">
             <button 
-              className="outline-card p-2 rounded-full hover-bounce relative" 
+              className="outline-card p-2 rounded-full hover-bounce" 
               aria-label="Messages"
               onClick={() => {
                 setIsMessagesOpen(!isMessagesOpen);
@@ -147,22 +129,16 @@ const TopNavBar = () => {
               }}
             >
               <MessageSquare className="h-5 w-5 text-secondary" />
-              {unreadMessages > 0 && (
-                <span className="absolute -top-1 -right-1 flex items-center justify-center h-5 w-5 text-xs font-bold rounded-full bg-primary text-primary-foreground">
-                  {unreadMessages}
-                </span>
-              )}
             </button>
             <MessageDropdown 
               isOpen={isMessagesOpen} 
               onClose={() => setIsMessagesOpen(false)} 
-              onMarkAllRead={() => setUnreadMessages(0)} 
             />
           </div>
           
           <div className="relative">
             <button 
-              className="outline-card p-2 rounded-full hover-bounce relative" 
+              className="outline-card p-2 rounded-full hover-bounce" 
               aria-label="Notifications"
               onClick={() => {
                 setIsNotificationsOpen(!isNotificationsOpen);
@@ -170,26 +146,16 @@ const TopNavBar = () => {
               }}
             >
               <Bell className="h-5 w-5 text-primary" />
-              {unreadNotifications > 0 && (
-                <span className="absolute -top-1 -right-1 flex items-center justify-center h-5 w-5 text-xs font-bold rounded-full bg-primary text-primary-foreground">
-                  {unreadNotifications}
-                </span>
-              )}
             </button>
             <NotificationDropdown 
               isOpen={isNotificationsOpen} 
               onClose={() => setIsNotificationsOpen(false)} 
-              onMarkAllRead={() => setUnreadNotifications(0)} 
             />
           </div>
           
           <ThemeToggle />
           
-          <button 
-            className="outline-card p-1 rounded-full hover-bounce" 
-            aria-label="User profile"
-            onClick={() => setIsProfileOpen(true)}
-          >
+          <button className="outline-card p-1 rounded-full hover-bounce" aria-label="User profile">
             <img
               src="https://api.dicebear.com/7.x/adventurer/svg?seed=Felix"
               alt="User avatar"
@@ -198,14 +164,9 @@ const TopNavBar = () => {
           </button>
         </div>
       </div>
-      <div className="md:hidden mt-2 px-4">
+      <div className="md:hidden mt-3 px-4">
         <SearchBar />
       </div>
-      
-      <UserProfile 
-        isOpen={isProfileOpen} 
-        onClose={() => setIsProfileOpen(false)} 
-      />
     </header>
   );
 };

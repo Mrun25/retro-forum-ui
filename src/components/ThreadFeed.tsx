@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import ThreadCard from './ThreadCard';
 import { ArrowDownAZ, FlameKindling, UserRound, ThumbsUp, MessageSquare } from 'lucide-react';
@@ -93,6 +92,7 @@ const ThreadFeed = () => {
     
     switch(sortOption) {
       case "Latest":
+        // Using timeAgo as a proxy for recency (in a real app would use timestamps)
         sortedThreads.sort((a, b) => a.timeAgo.localeCompare(b.timeAgo));
         break;
       case "Most Liked":
@@ -101,8 +101,10 @@ const ThreadFeed = () => {
       case "Most Commented":
         sortedThreads.sort((a, b) => b.replyCount - a.replyCount);
         break;
+      // Other sort options would have similar logic
     }
     
+    // Apply category filter if one is selected
     if (selectedCategory) {
       sortedThreads = sortedThreads.filter(thread => thread.category === selectedCategory);
     }
@@ -113,6 +115,7 @@ const ThreadFeed = () => {
 
   const filterByCategory = (category: string) => {
     if (selectedCategory === category) {
+      // If clicking the same category, clear the filter
       setSelectedCategory(null);
       setDisplayedThreads(threadsData);
     } else {
@@ -121,17 +124,18 @@ const ThreadFeed = () => {
     }
   };
 
+  // Get unique categories for category filter
   const categories = [...new Set(threadsData.map(thread => thread.category))];
 
   return (
-    <div className="flex-1 py-6 px-4 animate-fade-in">
+    <div className="flex-1 py-6 px-4">
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-xl font-bold">Community Discussions</h2>
         
         <div className="relative">
           <button
             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-            className="outline-card px-4 py-2 flex items-center gap-2 hover-bounce-sm border-[var(--outline-width)] border-[var(--outline-color)]"
+            className="outline-card px-4 py-2 flex items-center gap-2 hover-bounce-sm"
           >
             <span>Sort: {selectedSort}</span>
             <ArrowDownAZ className="h-4 w-4" />
@@ -154,12 +158,13 @@ const ThreadFeed = () => {
         </div>
       </div>
       
+      {/* Category filters */}
       <div className="flex gap-2 mb-6 overflow-x-auto pb-2">
         {categories.map(category => (
           <button
             key={category}
             onClick={() => filterByCategory(category)}
-            className={`outline-pill whitespace-nowrap border-[var(--outline-width)] border-[var(--outline-color)] ${
+            className={`outline-pill whitespace-nowrap ${
               selectedCategory === category ? 'bg-accent' : 'bg-background'
             }`}
           >
@@ -172,7 +177,7 @@ const ThreadFeed = () => {
               setSelectedCategory(null);
               setDisplayedThreads(threadsData);
             }}
-            className="outline-pill bg-destructive text-destructive-foreground whitespace-nowrap border-[var(--outline-width)] border-[var(--outline-color)]"
+            className="outline-pill bg-destructive text-destructive-foreground whitespace-nowrap"
           >
             Clear Filter
           </button>

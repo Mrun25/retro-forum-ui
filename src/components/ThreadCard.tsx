@@ -1,50 +1,44 @@
 
 import React, { useState } from 'react';
-import { Bookmark, BookmarkCheck } from 'lucide-react';
-import { toast } from 'sonner';
-import { useBookmarkContext } from './BookmarkedPanel';
-import { ThreadCardProps, CommentType } from '@/types/thread';
-import CategoryPill from './thread/CategoryPill';
-import ThreadActions from './thread/ThreadActions';
-import CommentSection from './thread/CommentSection';
+import { MessageSquare, Bookmark, BookmarkCheck, ArrowUp, ArrowDown, Clock } from 'lucide-react';
+
+type ThreadCardProps = {
+  title: string;
+  category: string;
+  categoryColor: string;
+  content: string;
+  username: string;
+  avatar: string;
+  replyCount: number;
+  timeAgo: string;
+  upvotes: number;
+  tags: string[];
+};
 
 const ThreadCard = ({
-  id,
   title,
   category,
   categoryColor,
   content,
   username,
   avatar,
-  replyCount: initialReplyCount,
+  replyCount,
   timeAgo,
   upvotes: initialUpvotes,
   tags
 }: ThreadCardProps) => {
   const [upvotes, setUpvotes] = useState(initialUpvotes);
   const [userVote, setUserVote] = useState<'up' | 'down' | null>(null);
-  const [replyCount, setReplyCount] = useState(initialReplyCount);
-  const [showComments, setShowComments] = useState(false);
-  const [comments, setComments] = useState<CommentType[]>([
-    {
-      id: 1,
-      username: "designPro",
-      avatar: "https://api.dicebear.com/7.x/adventurer/svg?seed=Dusty",
-      content: "This is really insightful! I've been thinking about the same issues.",
-      timeAgo: "1h ago"
-    },
-    {
-      id: 2,
-      username: "techGuru",
-      avatar: "https://api.dicebear.com/7.x/adventurer/svg?seed=Coco",
-      content: "I disagree with point #2, but overall good discussion.",
-      timeAgo: "30m ago"
-    }
-  ]);
+  const [isBookmarked, setIsBookmarked] = useState(false);
 
-  // Use the bookmark context
-  const { isBookmarked, addBookmark, removeBookmark } = useBookmarkContext();
-  const threadIsBookmarked = isBookmarked(id);
+  // Map the category to appropriate colors for outlined design
+  const getCategoryPillClass = () => {
+    if (category === "Development") return "bg-secondary";
+    if (category === "Showcase") return "bg-accent";
+    if (category === "Marketing") return "bg-[#FFD1E3]";
+    if (category === "Design") return "bg-primary";
+    return "bg-[#D1F5E0]"; // General
+  };
 
   const handleUpvote = () => {
     if (userVote === 'up') {
@@ -53,10 +47,6 @@ const ThreadCard = ({
     } else {
       setUpvotes(userVote === 'down' ? upvotes + 2 : upvotes + 1);
       setUserVote('up');
-    }
-    
-    if (userVote !== 'up') {
-      toast.success("Upvoted thread");
     }
   };
 
@@ -68,39 +58,24 @@ const ThreadCard = ({
       setUpvotes(userVote === 'up' ? upvotes - 2 : upvotes - 1);
       setUserVote('down');
     }
-    
-    if (userVote !== 'down') {
-      toast.success("Downvoted thread");
-    }
   };
 
   const toggleBookmark = () => {
-    if (threadIsBookmarked) {
-      removeBookmark(id);
-    } else {
-      addBookmark({
-        id,
-        title,
-        username,
-        timeAgo
-      });
-    }
-  };
-  
-  const toggleComments = () => {
-    setShowComments(!showComments);
+    setIsBookmarked(!isBookmarked);
   };
 
   return (
-    <article className="outline-card p-5 transition-all duration-300 hover-bounce border-[var(--outline-width)] border-[var(--outline-color)]">
+    <article className="outline-card p-5 transition-all duration-300 hover-bounce">
       <div className="flex justify-between items-start mb-3">
-        <CategoryPill category={category} />
+        <div className={`outline-pill ${getCategoryPillClass()}`}>
+          {category}
+        </div>
         <button 
-          className="text-muted-foreground hover:text-foreground transition-colors duration-200 hover:animate-wobble"
+          className="text-muted-foreground hover:text-foreground transition-colors duration-200"
           onClick={toggleBookmark}
-          aria-label={threadIsBookmarked ? "Remove bookmark" : "Add bookmark"}
+          aria-label={isBookmarked ? "Remove bookmark" : "Add bookmark"}
         >
-          {threadIsBookmarked ? (
+          {isBookmarked ? (
             <BookmarkCheck className="h-5 w-5 text-accent" />
           ) : (
             <Bookmark className="h-5 w-5" />
@@ -125,26 +100,36 @@ const ThreadCard = ({
           <span className="text-sm font-medium">{username}</span>
         </div>
         
-        <ThreadActions 
-          timeAgo={timeAgo}
-          replyCount={replyCount}
-          upvotes={upvotes}
-          userVote={userVote}
-          onToggleComments={toggleComments}
-          onUpvote={handleUpvote}
-          onDownvote={handleDownvote}
-        />
+        <div className="flex items-center gap-4">
+          <div className="flex items-center gap-1 text-muted-foreground">
+            <Clock className="h-4 w-4" />
+            <span className="text-xs">{timeAgo}</span>
+          </div>
+          
+          <div className="flex items-center gap-1 text-muted-foreground">
+            <MessageSquare className="h-4 w-4" />
+            <span className="text-xs">{replyCount}</span>
+          </div>
+          
+          <div className="flex items-center outline-pill bg-background py-0">
+            <button 
+              className={`p-1 hover:animate-wobble ${userVote === 'up' ? 'text-accent' : ''}`}
+              onClick={handleUpvote}
+              aria-label="Upvote"
+            >
+              <ArrowUp className="h-4 w-4" />
+            </button>
+            <span className="text-xs font-medium mx-1">{upvotes}</span>
+            <button 
+              className={`p-1 hover:animate-wobble ${userVote === 'down' ? 'text-destructive' : ''}`}
+              onClick={handleDownvote}
+              aria-label="Downvote"
+            >
+              <ArrowDown className="h-4 w-4" />
+            </button>
+          </div>
+        </div>
       </div>
-      
-      {showComments && (
-        <CommentSection 
-          comments={comments}
-          replyCount={replyCount}
-          setReplyCount={setReplyCount}
-          setComments={setComments}
-          onClose={toggleComments}
-        />
-      )}
     </article>
   );
 };

@@ -1,7 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
 import { Moon, Sun } from 'lucide-react';
-import { toast } from 'sonner';
 
 const ThemeToggle = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -18,17 +17,14 @@ const ThemeToggle = () => {
   }, []);
 
   const toggleTheme = () => {
-    const newIsDarkMode = !isDarkMode;
-    setIsDarkMode(newIsDarkMode);
+    setIsDarkMode(!isDarkMode);
     
-    if (newIsDarkMode) {
-      document.documentElement.classList.add('dark');
-      localStorage.setItem('theme', 'dark');
-      toast.success('Dark mode enabled');
-    } else {
+    if (isDarkMode) {
       document.documentElement.classList.remove('dark');
       localStorage.setItem('theme', 'light');
-      toast.success('Light mode enabled');
+    } else {
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
     }
   };
 
