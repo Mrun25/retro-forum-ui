@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import ThreadCard from './ThreadCard';
 import { ArrowDownAZ, FlameKindling, UserRound, ThumbsUp, MessageSquare } from 'lucide-react';
@@ -130,7 +131,7 @@ const ThreadFeed = () => {
         <div className="relative">
           <button
             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-            className="outline-card px-4 py-2 flex items-center gap-2 hover-bounce-sm"
+            className="outline-card px-4 py-2 flex items-center gap-2 hover-bounce-sm border-[var(--outline-width)] border-[var(--outline-color)]"
           >
             <span>Sort: {selectedSort}</span>
             <ArrowDownAZ className="h-4 w-4" />
@@ -158,7 +159,7 @@ const ThreadFeed = () => {
           <button
             key={category}
             onClick={() => filterByCategory(category)}
-            className={`outline-pill whitespace-nowrap ${
+            className={`outline-pill whitespace-nowrap border-[var(--outline-width)] border-[var(--outline-color)] ${
               selectedCategory === category ? 'bg-accent' : 'bg-background'
             }`}
           >
@@ -171,7 +172,7 @@ const ThreadFeed = () => {
               setSelectedCategory(null);
               setDisplayedThreads(threadsData);
             }}
-            className="outline-pill bg-destructive text-destructive-foreground whitespace-nowrap"
+            className="outline-pill bg-destructive text-destructive-foreground whitespace-nowrap border-[var(--outline-width)] border-[var(--outline-color)]"
           >
             Clear Filter
           </button>

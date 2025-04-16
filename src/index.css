@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -104,6 +105,7 @@
 }
 
 @layer components {
+  /* Enhanced outline-card class with explicit border styling */
   .outline-card {
     @apply rounded-xl border-[var(--outline-width)] border-[var(--outline-color)] bg-card;
   }
