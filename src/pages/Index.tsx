@@ -16,7 +16,7 @@ const Index = () => {
         <LeftSidebar />
         
         <main className="flex-1 overflow-y-auto">
-          <div className="container mx-auto max-w-4xl">
+          <div className="container mx-auto max-w-4xl px-4 py-6">
             <ThreadFeed />
           </div>
           <div className="h-20 md:hidden" />

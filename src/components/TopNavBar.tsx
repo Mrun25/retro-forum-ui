@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { MessageSquare, Bell, User } from 'lucide-react';
 import ThemeToggle from './ThemeToggle';
 import SearchBar from './SearchBar';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 
 interface NotificationDropdownProps {
   isOpen: boolean;
@@ -155,13 +156,57 @@ const TopNavBar = () => {
           
           <ThemeToggle />
           
-          <button className="outline-card p-1 rounded-full hover-bounce" aria-label="User profile">
-            <img
-              src="https://api.dicebear.com/7.x/adventurer/svg?seed=Felix"
-              alt="User avatar"
-              className="h-7 w-7 rounded-full"
-            />
-          </button>
+          <Popover>
+            <PopoverTrigger asChild>
+              <button className="outline-card p-1 rounded-full hover-bounce" aria-label="User profile">
+                <img
+                  src="https://api.dicebear.com/7.x/adventurer/svg?seed=Felix"
+                  alt="User avatar"
+                  className="h-7 w-7 rounded-full"
+                />
+              </button>
+            </PopoverTrigger>
+            <PopoverContent className="w-80 p-0">
+              <div className="p-4 border-b border-border">
+                <div className="flex items-start gap-3">
+                  <img
+                    src="https://api.dicebear.com/7.x/adventurer/svg?seed=Felix"
+                    alt="User avatar"
+                    className="h-12 w-12 rounded-full border-2 border-border"
+                  />
+                  <div>
+                    <h3 className="font-medium">Alex Johnson</h3>
+                    <p className="text-sm text-muted-foreground">alex.johnson@example.com</p>
+                    <p className="text-xs text-muted-foreground mt-1">Member since April 2023</p>
+                  </div>
+                </div>
+                <div className="mt-3 grid grid-cols-2 gap-2 text-center text-sm">
+                  <div className="border border-border rounded-md p-2">
+                    <div className="font-medium">42</div>
+                    <div className="text-xs text-muted-foreground">Threads</div>
+                  </div>
+                  <div className="border border-border rounded-md p-2">
+                    <div className="font-medium">185</div>
+                    <div className="text-xs text-muted-foreground">Upvotes</div>
+                  </div>
+                </div>
+              </div>
+              <div className="p-2">
+                <button className="w-full text-left p-2 text-sm hover:bg-accent rounded-md">
+                  Profile Settings
+                </button>
+                <button className="w-full text-left p-2 text-sm hover:bg-accent rounded-md">
+                  Account Settings
+                </button>
+                <button className="w-full text-left p-2 text-sm hover:bg-accent rounded-md">
+                  Help Center
+                </button>
+                <button className="w-full text-left p-2 text-destructive hover:bg-accent rounded-md">
+                  Sign Out
+                </button>
+              </div>
+            </PopoverContent>
+          </Popover>
         </div>
       </div>
       <div className="md:hidden mt-3 px-4">

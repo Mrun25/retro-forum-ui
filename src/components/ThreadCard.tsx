@@ -1,6 +1,9 @@
 
 import React, { useState } from 'react';
-import { MessageSquare, Bookmark, BookmarkCheck, ArrowUp, ArrowDown, Clock } from 'lucide-react';
+import { MessageSquare, Bookmark, BookmarkCheck, ArrowUp, ArrowDown, Clock, Send } from 'lucide-react';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 
 type ThreadCardProps = {
   title: string;
@@ -15,6 +18,14 @@ type ThreadCardProps = {
   tags: string[];
 };
 
+type CommentType = {
+  id: number;
+  username: string;
+  avatar: string;
+  content: string;
+  timeAgo: string;
+};
+
 const ThreadCard = ({
   title,
   category,
@@ -22,7 +33,7 @@ const ThreadCard = ({
   content,
   username,
   avatar,
-  replyCount,
+  replyCount: initialReplyCount,
   timeAgo,
   upvotes: initialUpvotes,
   tags
@@ -30,6 +41,24 @@ const ThreadCard = ({
   const [upvotes, setUpvotes] = useState(initialUpvotes);
   const [userVote, setUserVote] = useState<'up' | 'down' | null>(null);
   const [isBookmarked, setIsBookmarked] = useState(false);
+  const [replyCount, setReplyCount] = useState(initialReplyCount);
+  const [newComment, setNewComment] = useState('');
+  const [comments, setComments] = useState<CommentType[]>([
+    {
+      id: 1,
+      username: "webDev",
+      avatar: "https://api.dicebear.com/7.x/adventurer/svg?seed=John",
+      content: "This is really insightful, thanks for sharing!",
+      timeAgo: "1h ago"
+    },
+    {
+      id: 2,
+      username: "designPro",
+      avatar: "https://api.dicebear.com/7.x/adventurer/svg?seed=Emma",
+      content: "I disagree with point #2, but otherwise great post.",
+      timeAgo: "30m ago"
+    }
+  ]);
 
   // Map the category to appropriate colors for outlined design
   const getCategoryPillClass = () => {
@@ -64,8 +93,24 @@ const ThreadCard = ({
     setIsBookmarked(!isBookmarked);
   };
 
+  const handleAddComment = () => {
+    if (newComment.trim() === '') return;
+    
+    const newCommentObj: CommentType = {
+      id: comments.length + 1,
+      username: "currentUser",
+      avatar: "https://api.dicebear.com/7.x/adventurer/svg?seed=Felix",
+      content: newComment,
+      timeAgo: "Just now"
+    };
+    
+    setComments([...comments, newCommentObj]);
+    setNewComment('');
+    setReplyCount(replyCount + 1);
+  };
+
   return (
-    <article className="outline-card p-5 transition-all duration-300 hover-bounce">
+    <article className="outline-card border border-black dark:border-white p-5 transition-all duration-300 hover-bounce">
       <div className="flex justify-between items-start mb-3">
         <div className={`outline-pill ${getCategoryPillClass()}`}>
           {category}
@@ -106,10 +151,43 @@ const ThreadCard = ({
             <span className="text-xs">{timeAgo}</span>
           </div>
           
-          <div className="flex items-center gap-1 text-muted-foreground">
-            <MessageSquare className="h-4 w-4" />
-            <span className="text-xs">{replyCount}</span>
-          </div>
+          <Popover>
+            <PopoverTrigger asChild>
+              <button className="flex items-center gap-1 text-muted-foreground hover:text-foreground transition-colors">
+                <MessageSquare className="h-4 w-4" />
+                <span className="text-xs">{replyCount}</span>
+              </button>
+            </PopoverTrigger>
+            <PopoverContent className="w-80 p-3">
+              <h3 className="font-medium mb-2">Comments</h3>
+              <div className="space-y-3 max-h-60 overflow-y-auto mb-3">
+                {comments.map(comment => (
+                  <div key={comment.id} className="border border-border rounded-md p-2">
+                    <div className="flex items-center gap-2 mb-1">
+                      <img src={comment.avatar} alt={comment.username} className="h-6 w-6 rounded-full" />
+                      <span className="text-xs font-medium">{comment.username}</span>
+                      <span className="text-xs text-muted-foreground ml-auto">{comment.timeAgo}</span>
+                    </div>
+                    <p className="text-sm">{comment.content}</p>
+                  </div>
+                ))}
+              </div>
+              <div className="flex gap-2">
+                <Input 
+                  placeholder="Add a comment..." 
+                  value={newComment}
+                  onChange={(e) => setNewComment(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') handleAddComment();
+                  }}
+                  className="text-sm"
+                />
+                <Button size="sm" onClick={handleAddComment}>
+                  <Send className="h-4 w-4" />
+                </Button>
+              </div>
+            </PopoverContent>
+          </Popover>
           
           <div className="flex items-center outline-pill bg-background py-0">
             <button 
